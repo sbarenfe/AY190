@@ -1,0 +1,10 @@
+. DS_Store
+*.[ oa ]
+*~
+.#*
+*. aux
+*. log
+*. bbl
+*. blg
+*. out
+*. toc

@@ -1,0 +1,246 @@
+\documentclass[11pt,letterpaper]{article}
+
+% Load some basic packages that are useful to have
+% and that should be part of any LaTeX installation.
+%
+% be able to include figures
+\usepackage{graphicx}
+% get nice colors
+\usepackage{xcolor}
+
+% change default font to Palatino (looks nicer!)
+\usepackage[latin1]{inputenc}
+\usepackage{mathpazo}
+\usepackage[T1]{fontenc}
+% load some useful math symbols/fonts
+\usepackage{latexsym,amsfonts,amsmath,amssymb}
+
+% comfort package to easily set margins
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+
+% control some spacings
+%
+% spacing after a paragraph
+\setlength{\parskip}{.15cm}
+% indentation at the top of a new paragraph
+\setlength{\parindent}{0.0cm}
+
+
+\begin{document}
+
+\begin{center}
+\Large
+Ay190 -- Worksheet 3\\
+Scott Barenfeld\\
+Date: \today
+\end{center}
+
+I worked with Daniel DeFelippis
+\section{Problem 1}
+\subsection{Part a)}
+To integrate $f(x)=\sin{x}$, I used the equations given in the notes 
+for the midpoint rule, trapezoid rule, and Simpson's rule, 
+respectively:
+
+\begin{equation}
+Q_i=(b_i-a_i)f\left(\frac{a_i+b_i}{2}\right)
+\end{equation}
+
+\begin{equation}
+Q_i=\frac{1}{2}(b_i-a_i)[f(b_i)+f(a_i)]
+\end{equation}
+
+\begin{equation}
+Q_i=\frac{b_i-a_i}{6}\left[f(a_i)+4f\left(\frac{a_i+b_i}{2}\right)+f(b_i)\right]
+\end{equation}
+
+The results are shown in Table \ref{tab:onea}.
+
+\begin{table}[!h]
+\centering
+\caption{Results of Numerical Integration}
+\begin{tabular}{c|c|c}
+\hline
+ & $h=\frac{\pi}{10}$ & $h=\frac{\pi}{100}$\\
+\hline
+Midpoint & 2.0082484079 & 2.0000822491\\
+Trapezoidal & 1.9835235375 & 1.9998355039\\
+Simpson's & 2.00000678444 & 2.00000000068\\
+Analytic & 2 & 2\\
+\hline
+\end{tabular}
+\label{tab:onea}
+\end{table}
+
+Table \ref{tab:onea2} shows the errors in these methods.
+
+\begin{table}[!h]
+\centering
+\caption{Errors in Numerical Integration}
+\begin{tabular}{c|c|c}
+\hline
+ & $h=\frac{\pi}{10}$ & $h=\frac{\pi}{100}$\\
+\hline
+Midpoint & $8.25\times10^{-3}$ & $8.22\times10^{-5}$\\
+Trapezoidal & $1.65\times10^{-2}$ & $1.64\times10^{-4}$\\
+Simpson's & $6.78\times10^{-6}$ & $6.76\times10^{-10}$\\
+\hline
+\end{tabular}
+\label{tab:onea2}
+\end{table}
+
+The global error in the midpoint and trapezoidal rules goes as $h^2$, so 
+the error should drop by a factor of 100 when $h$ decreases by a 
+factor of 10.  The global error in Simpson's rule goes as $h^4$, 
+so the error should drop by a factor of $10^4$.  Table \ref{tab:onea} 
+shows that this indeed is the case.
+
+\subsection{Part b)}
+The results of the numerical integration of $f(x)=x\sin{x}$ are 
+shown in Table \ref{tab:oneb}.  The errors are shown in Table 
+\ref{tab:oneb2}.  As before, the decrease in error behaves as expected.  
+
+\begin{table}[!h]
+\centering
+\caption{Results of Numerical Integration}
+\begin{tabular}{c|c|c}
+\hline
+ & $h=\frac{\pi}{10}$ & $h=\frac{\pi}{100}$\\
+\hline
+Midpoint & 3.1545492224 & 3.1417218501\\
+Trapezoidal & 3.1157114868 & 3.1413342637\\
+Simpson's & 3.14160331057 & 3.14159265465\\
+Analytic & $\pi$ & $\pi$\\
+\hline
+\end{tabular}
+\label{tab:oneb}
+\end{table}
+
+\begin{table}[!h]
+\centering
+\caption{Errors in Numerical Integration}
+\begin{tabular}{c|c|c}
+\hline
+ & $h=\frac{\pi}{10}$ & $h=\frac{\pi}{100}$\\
+\hline
+Midpoint & $1.29\times10^{-2}$ & $1.29\times10^{-4}$\\
+Trapezoidal & $2.59\times10^{-2}$ & $2.58\times10^{-4}$\\
+Simpson's & $1.07\times10^{-5}$ & $1.06\times10^{-9}$\\
+\hline
+\end{tabular}
+\label{tab:oneb2}
+\end{table}
+
+\section{Problem 2}
+\subsection{Part a)}
+I used Gauss-Laguerre Quadrature to calculate 
+
+\begin{equation}
+n_e=\frac{8\pi(k_BT)^3}{(2\pi\hbar c)^3}\int_0^{\infty}\!\frac{x^2}{e^{x}+1}\,\mathrm{d}x.
+\end{equation}
+
+I rewrote the integral in the form 
+
+\begin{equation}
+Q=\int_0^{\infty}\!f(x)e^{-x}\,\mathrm{d}x
+\end{equation}
+
+where
+
+\begin{equation}
+f(x)=\frac{x^2e^{x}}{e^{x}+1}.
+\end{equation}
+
+I used Python's built-in Gauss-Laguerre roots and weights.  My results 
+are shown in Table \ref{tab:two}.
+
+\begin{table}[!h]
+\centering
+\caption{Gauss-Laguerre Integration}
+\begin{tabular}{c|c|c}
+\hline
+$n$ & $Q$ & $n_e (cm^{-3})$\\
+\hline
+5 & 1.802027 & $1.896\times10^{35}$\\
+10 & 1.803095 & $1.897\times10^{35}$\\
+20 & 1.803085 & $1.897\times10^{35}$\\
+\hline
+\end{tabular}
+\label{tab:two}
+\end{table}
+
+To check for converge, I used the fact that Gauss-Laguerre quadrature 
+has an error term of 
+\begin{equation}
+\mathcal{O}(n)\propto\frac{(n!)^2}{(2n)!},
+\end{equation}
+which I found on Wolfram Mathworld.  Using self-convergence
+\begin{equation}
+\frac{|Q(20)-Q(10)|}{|Q(10)-Q(5)|}=\frac{\mathcal{O}(20)-\mathcal{O}(10)}{\mathcal{O}(10)-\mathcal{O}(5)}
+\end{equation}
+The left hand side evaluates to $9.14\times 10^{-3}$, while the right hand side evaulates to $1.37\times 10^{-3}$.
+These are a little off, but the error terms also have a factor of the $2n^{th}$ derivative of $f$ which I did 
+not include.  The $n=20$ value of 1.803085 matches what I found for the integral using Mathematica.
+
+\subsection{Part b)}
+I first rewrote the integral over the $i^{th}$ bin:
+\begin{equation}\label{eq:int}
+\int_{5i}^{5(i+1)}\!\frac{x^2}{e^{x}+1}\,\mathrm{d}x
+\end{equation}
+in a form I could use Gauss-Legendre Quadrature on.  I made the substitution
+\begin{equation}
+u=\frac{x-\frac{5i+5(i+1)}{2}}{5/2}=\frac{2x-10i-5}{5}
+\end{equation}
+implying
+\begin{equation}\label{eq:x}
+x=\frac{5u+10i+5}{2}
+\end{equation}
+\begin{equation}
+\mathrm{d}x=\frac{5}{2}\mathrm{d}u.
+\end{equation}
+This substitution changes Eq. \ref{eq:int} to
+\begin{equation}
+\frac{5}{2}\int_{-1}^{1}\!\frac{x^2}{e^{x}+1}\,\mathrm{d}u
+\end{equation}
+with the expression for $x$ in Eq. \ref{eq:x}.  I then implemented 
+Gauss-Legendre Quadrature, again using Python's built-in weights and roots.  
+I then calculated 
+\begin{equation}
+\left[\frac{\mathrm{d}n_e}{\mathrm{d}E}\right]_i=\frac{[n_e]_i}{\Delta E}
+\end{equation}
+for bins of size $\Delta E=5$ MeV from $0$ to $150$ MeV.  The results are displayed 
+in Table \ref{tab:twob}.
+
+\begin{table}[!h]
+\centering
+\caption{Spectral Distribution}
+\begin{tabular}{c|c|c|c|c|c}
+\hline
+E Range (MeV) & $\frac{\mathrm{d}n_e}{\mathrm{d}E}$ (MeV/cm$^3$) & E Range (MeV) & $\frac{\mathrm{d}n_e}{\mathrm{d}E}$ (MeV/cm$^3$) & 
+E Range (MeV) & $\frac{\mathrm{d}n_e}{\mathrm{d}E}$ (MeV/cm$^3$)\\
+\hline
+0-5 & $3.27\times10^{34}$ & 50-55 & $1.04\times10^{16}$ & 100-105 & $7.93\times10^{-6}$\\
+5-10 & $5.12\times10^{33}$ & 55-60 & $8.51\times10^{13}$ & 105-110 & $5.88\times10^{-8}$\\
+10-15 & $1.15\times10^{32}$ & 60-65 & $6.80\times10^{11}$ & 110-115 & $4.35\times10^{-10}$\\
+15-20 & $1.64\times10^{30}$ & 65-70 & $5.37\times10^{9}$ & 115-120 & $3.20\times10^{-12}$\\
+20-25 & $1.90\times10^{28}$ & 70-75 & $4.19\times10^{7}$ & 120-125 & $2.35\times10^{-14}$\\
+25-30 & $1.96\times10^{26}$ & 75-80 & $3.23\times10^{5}$ & 125-130 & $1.71\times10^{-16}$\\
+30-35 & $1.88\times10^{24}$ & 80-85 & $2.47\times10^{3}$ & 130-135 & $1.25\times10^{-18}$\\
+35-40 & $1.71\times10^{22}$ & 85-90 & $1.88\times10^{1}$ & 135-140 & $9.06\times10^{-21}$\\
+40-45 & $1.49\times10^{20}$ & 90-95 & $1.42\times10^{-1}$ & 140-145 & $6.56\times10^{-23}$\\
+45-50 & $1.26\times10^{18}$ & 95-100 & $1.06\times10^{-3}$ & 145-150 & $4.74\times10^{-25}$\\
+\hline
+\end{tabular}
+\label{tab:twob}
+\end{table}
+
+To check that my code worked, I recalculated the total $n_e$ using
+\begin{equation}
+n_e=\displaystyle\sum\limits_{i=0}^{\infty} \left[\frac{\mathrm{d}n_e}{\mathrm{d}E}\right]_i\times\Delta E.
+\end{equation}
+I found $n_e=1.897\times10^{35}$, matching what I found in Part a).
+
+
+\end{document}
+Anything that comes after \end{document} is completely
+ignored by LaTeX.
